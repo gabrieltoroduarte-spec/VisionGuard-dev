@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "VisionGuard",
+    "slug": "visionguard",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": {
+      "package": "com.visionguard.app",
+      "permissions": ["CAMERA","ACCESS_FINE_LOCATION","RECORD_AUDIO","INTERNET"]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5832ff70-84d2-4955-9d8f-ef62a9c8f3e5"
+      }
+    }
+  }
+}
