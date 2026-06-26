@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -6,6 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { LoginScreen } from './src/screens/LoginScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { NavigationScreen, ThreatsScreen, PaymentScreen, ProfileScreen } from './src/screens/AllScreens';
@@ -29,7 +32,22 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   useEffect(() => { setTimeout(() => setLoading(false), 1200); }, []);
   if (loading) return (<View style={styles.loading}><StatusBar style="light" /><MaterialCommunityIcons name="shield-eye" size={64} color={COLORS.cyan} /><ActivityIndicator size="large" color={COLORS.cyan} style={{ marginTop: 24 }} /></View>);
-  return (<SafeAreaProvider><StatusBar style="light" /><NavigationContainer>{isAuthenticated ? <AuthenticatedNavigator /> : <Stack.Navigator screenOptions={{ headerShown: false }}><Stack.Screen name="Login">{() => <LoginScreen onLogin={() => setIsAuthenticated(true)} />}</Stack.Screen></Stack.Navigator>}</NavigationContainer></SafeAreaProvider>);
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <StatusBar style="light" />
+        <NavigationContainer>
+          {isAuthenticated ? (
+            <AuthenticatedNavigator />
+          ) : (
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Login">{() => <LoginScreen onLogin={() => setIsAuthenticated(true)} />}</Stack.Screen>
+            </Stack.Navigator>
+          )}
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
 }
 
 const styles = StyleSheet.create({ loading: { flex: 1, backgroundColor: COLORS.background, justifyContent: 'center', alignItems: 'center' } });
